@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>WP SVG: Working with Scalable Vector Graphics in WordPress</title>
+
+		<meta name="description" content="Slides from my 2017 WordCamp Baltimore talk about working with scalable vector graphics in WordPress.">
+		<meta name="author" content="Russell Heimlich">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="reveal.js/css/theme/sky.css" id="theme">
+		<link rel="stylesheet" href="css/overrides.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="css/mono-blue.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="reveal.js/lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+
+			<!--
+			Interesting links for this presentation:
+			 - http://paulbourke.net/dataformats/bitmaps/
+			 - http://www.compatt.com/lab/IandA/IandA_00-00-02.htm
+			 - http://vector-conversions.com/vectorizing/raster_vs_vector.html
+			 - https://www.w3.org/TR/SVG/images/paths/cubic02.svg
+			-->
+			<div class="slides">
+				<section>
+					<h1>WP SVG</h1>
+					<p>Working with Scalable Vector Graphics in WordPress</p>
+					<p><a href="" target="_blank">v.gd/wpsvg</a></p>
+				</section>
+				<section>
+					<h2>What this talk will cover</h2>
+					<p class="fragment">What SVGs are and how they work</p>
+					<p class="fragment">Why SVGs are important</p>
+					<p class="fragment">Icon fonts and why they are bad</p>
+					<p class="fragment">How we can use SVGs</p>
+					<p class="fragment">Questions</p>
+				</section>
+				<section>
+					<h1>About Me</h1>
+				</section>
+				<section>
+					<p>Russell Heimlich</p>
+					<img src="img/russell-and-zadie-in-car.jpg" style="max-width: 580px;">
+				</section>
+				<section>
+					<p>Lead Developer at Spirited Media</p>
+					<a href="https://billypenn.com" target="_blank">
+						<img src="img/billy-penn-logo.svg">
+					</a>
+					<a href="https://theincline.com" target="_blank">
+						<img src="img/the-incline-logo.svg">
+					</a>
+					<a href="https://www.denverite.com" target="_blank">
+						<img src="img/denverite-logo.png">
+					</a>
+				</section>
+				<section>
+					<p>Professional Toddler Chaser</p>
+					<img src="img/heimlich-family.jpg" style="max-width: 600px;">
+				</section>
+				<section>
+					<h1>What are SVGs?</h1>
+				</section>
+				<section>
+					<h2>SVGs are&hellip;</h2>
+					<ul>
+						<li class="fragment">XML based</li>
+						<li class="fragment">Vector</li>
+						<li class="fragment">An open standard</li>
+					</ul>
+				</section>
+				<section>
+					<p>SVGs define points and shapes in relation to one another in space.</p>
+					<img src="img/cubic-svg-paths.svg">
+				</section>
+				<section>
+					<h2>SVGs are good for&hellip;</h2>
+					<ul>
+						<li class="fragment">Icons</li>
+						<li class="fragment">Logos</li>
+						<li class="fragment">Charts</li>
+						<li class="fragment">Any type of flat, low-color graphic</li>
+					</ul>
+				</section>
+				<section>
+					<h2>What is a bitmap?</h2>
+					<ul>
+						<li class="fragment">A grid of pixel values</li>
+						<li class="fragment">Binary file format</li>
+						<li class="fragment">"A fixed set of dots"</li>
+					</ul>
+				</section>
+				<section>
+					<p>JPG, GIF, TIFF, BMP are all bitmap image formats.</p>
+					<img src="img/bitmap-formats.jpg">
+				</section>
+				<section>
+					<img src="img/how-a-bitmap-works.jpg">
+				</section>
+				<section>
+					<img src="img/how-color-bitmaps-work.png">
+					<p>Color bitmaps are a grid of color values</p>
+				</section>
+				<section>
+					<h2>Bitmaps are good for&hellip;</h2>
+					<ul>
+						<li class="fragment">Photos</li>
+						<li class="fragment">Continuous tones, blends of color</li>
+					</ul>
+				</section>
+				<section>
+					<table class="comparison-table">
+						<tr>
+							<td>
+								<img src="img/tiger-growling.svg">
+							</td>
+							<td>
+								<img src="img/tiger-growling.jpg">
+							</td>
+						</tr>
+						<tr>
+							<td>SVG</td>
+							<td>Bitmap</td>
+						</tr>
+					</table>
+				</section>
+				<section>
+					<h1>Why is SVG Important?</h1>
+				</section>
+				<section>
+					<h2>The websites we build need to work everywhere the web does!</h2>
+				</section>
+				<section>
+					<a href="http://atomicdesign.bradfrost.com/chapter-4/#redefining-design" target="_blank"><img src="img/the-multi-screen-web.png"></a>
+				</section>
+				<section>
+					<h2>Constraints on Graphics</h2>
+					<ul>
+						<li class="fragment">Different screen sizes</li>
+						<li class="fragment">Different resolutions (HiDPI/Retina)</li>
+						<li class="fragment">Bandwidth considerations</li>
+					</ul>
+				</section>
+				<section>
+					<p>Graphics need to be as crisp and as performant as possible.</p>
+					<img src="img/various-different-icon-sizes.jpg">
+				</section>
+				<section>
+					<h1>What about icon fonts?</h1>
+				</section>
+				<section>
+					<img src="img/icon-font-set.jpg">
+					<p>Icon fonts are font files that contain symbols instead of letters or numbers.</p>
+					<small>(See <a href="http://fontawesome.io/" target="_blank">Font Awesome</a>)</small>
+				</section>
+				<section>
+					<p>Icon fonts are an ugly hack!</p>
+					<img src="img/there-i-fixed-it.jpg">
+				</section>
+				<section>
+					<h2>Accessibility Issues</h2>
+					<p>Font icons use characters that get read aloud by screenreaders</p>
+				</section>
+				<section>
+					<h2>Clash with Emoji</h2>
+					<p>Icon fonts use unicode characters to display their icon which can conflict with emoji.</p>
+					<small>See <a href="https://www.etsy.com/teams/7720/bugs/discuss/14559563/" target="_blank">Etsy's Four Stars and a Horse bug</a></small>
+				</section>
+				<section>
+					<a href="https://twitter.com/marykuris/status/542832346131476480" target="_blank">
+						<img src="img/4-stars-and-a-horse.jpg" style="width: 75%;">
+					</a>
+				</section>
+				<section>
+					<p>When icon fonts fail&hellip;</p>
+					<img src="img/font-awesome-fails-in-opera-mini.jpg" style="width: 40%;">
+				</section>
+				<section>
+					<p>SVGs can be just as flexible as icon fonts without the downsides.</p>
+					<img src="img/icon-fonts-vs-svg.jpg">
+				</section>
+				<section>
+					<h2>Further Reading</h2>
+					<p><a href="https://cloudfour.com/thinks/seriously-dont-use-icon-fonts/" target="_blank">Seriously, Don’t Use Icon Fonts</a> by Tyler Sticka</p>
+					<p><a href="http://ianfeather.co.uk/ten-reasons-we-switched-from-an-icon-font-to-svg/" target="_blank">Ten reasons we switched from an icon font to SVG</a> by Ian Feather</p>
+				</section>
+				<section>
+					<h1>Can we use SVGs?</h1>
+				</section>
+				<section>
+					<h2>YES!</h2>
+					<a href="https://caniuse.com/#search=svg" target="_blank"><img src="img/caniuse-svg-support.jpg"></a>
+					<small>(Unless you need to support IE8 or Android 2.3)</small>
+				</section>
+				<section>
+					<h1>How can we use SVG files?</h1>
+				</section>
+				<section>
+					<p>As an <code>&lt;img&gt;</code></p>
+					<pre><code><img src="/path/to/my.svg" alt="A gnarly tiger"></code></pre>
+				</section>
+				<section data-background-image="img/ok.gif"></section>
+				<section>
+					<p>As a background image</p>
+<pre><code>.image {
+  background-image: url(/path/to/my.svg);
+  background-repeat: no-repeat;
+  height: 800px;
+  width: 800px;
+}</code></pre>
+<pre><code><div class="image">
+  <span class="visually-hidden-text">A mighty tiger!</span>
+</div></code></pre>
+				</section>
+				<section data-background-image="img/yeah.gif"></section>
+				<section>
+					<p>Defining an SVG Sprite</p>
+<pre><code><svg>
+  <defs>
+
+    <symbol id="icon-1">
+      <!-- Paths and shapes for first SVG -->
+    </symbol>
+
+    <symbol id="icon-2">
+       <!-- Paths and shapes for second SVG -->
+   </symbol>
+
+    <!-- Keep going for however many you need -->
+
+  </defs>
+</svg></code></pre>
+				</section>
+				<section>
+					<p>Using an SVG Sprite</p>
+<pre><code><svg class="icon icon-1">
+    <use xlink:href="#icon-1"></use>
+</svg>
+
+<svg class="icon icon-2">
+    <use xlink:href="#icon-2"></use>
+</svg></code></pre>
+				</section>
+				<section data-background-image="img/oh-really.gif"></section>
+				<section>
+					<p>Inlining an SVG Where We Want It</p>
+<pre><code><svg>
+  <path d="..."></path>
+</svg></code></pre>
+				</section>
+				<section data-background-image="img/i-guess.gif"></section>
+				<section>
+					<h2>Downsides</h2>
+					<p class="fragment">Using <code>&lt;img&gt;</code> or CSS <code>background-image</code> offers no control of what is inside <code>&lt;svg&gt;</code> element</p>
+					<p class="fragment">SVG sprites need to load all of the SVG elements on the page whether you use them or not</p>
+					<p class="fragment">Inlining SVG requires lots of copy and pasting</p>
+				</section>
+				<section>
+					<p>Loading SVG Inline is AWESOME!</p>
+					<p data-height="265" data-theme-id="light" data-slug-hash="MEqqeB" data-default-tab="css,result" data-user="kingkool68" data-embed-version="2" data-pen-title="Playing with SVGs" class="codepen">See the Pen <a href="https://codepen.io/kingkool68/pen/MEqqeB/">Playing with SVGs</a> by Russell Heimlich (<a href="https://codepen.io/kingkool68">@kingkool68</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+				</section>
+				<section>
+					<p>Just need a pinch of CSS</p>
+<pre><code>svg.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}</code></pre>
+				</section>
+				<section data-background-image="img/wow.gif"></section>
+				<section>
+					<h2>Pros of Inlining SVG</h2>
+					<p class="fragment">Only use an SVG when you need it</p>
+					<p class="fragment">No extra HTTP requests</p>
+					<p class="fragment">Control of <code>&lt;svg&gt;</code> elements</p>
+					<p class="fragment">Takes on size and color of parent element</p>
+				</section>
+				<section>
+					<p>But what about all of that copy and pasting?</p>
+					<img src="img/homer-disappear.gif">
+				</section>
+				<section>
+					<h1>How can we use SVG in WordPress?</h1>
+				</section>
+				<section>
+					<p>Enable SVGs in the Media Library with the <a href="https://wordpress.org/plugins/svg-support/" target="_blank">SVG Support</a> plugin.</p>
+					<a href="https://wordpress.org/plugins/svg-support/" target="_blank"><img src="img/svg-support-wordpress-plugin.jpg"></a>
+				</section>
+				<section>
+					<p>Or add this snippet to <code>functions.php</code></p>
+
+<pre><code>function enable_svg_mime_types( $mimes = array() ) {
+
+	$mimes['svg']  = 'image/svg+xml';
+	$mimes['svgz'] = 'image/svg+xml';
+
+	return $mimes;
+}
+add_filter( 'upload_mimes', 'enable_svg_mime_types', 10, 1 );</code></pre>
+				</section>
+				<section>
+					<p>Function for inlining SVGs</p>
+<pre><code>function wp_get_svg( $path = '', $args = array() ) {
+  if ( ! $path ) {
+    return;
+  }
+  $defaults = array(
+    'role' => 'image',
+    'css_class' => '',
+  );
+  $args = wp_parse_args( $args, $defaults );
+  $role_attr = $args['role'];
+  $css_class = $args['css_class'];
+  if ( is_array( $css_class ) ) {
+    $css_class = implode( ' ', $css_class );
+  }
+  if ( file_exists( $path ) ) {
+    $svg = file_get_contents( $path );
+    $svg = preg_replace( '/(width|height)="[\d\.]+"/i', '', $svg );
+    $svg = str_replace( '&lt;svg ',
+      '&lt;svg class="' . esc_attr( $css_class ) . '" role="' . esc_attr( $role_attr ) . '" ',
+      $svg );
+
+    return $svg;
+  }
+}</code></pre>
+				</section>
+				<section>
+					<p>Helper function we can use in markup</p>
+<pre><code>function wp_svg_icon( $icon = '' ) {
+  if ( ! $icon ) {
+    return;
+  }
+  $path = get_template_directory() . '/icons/' . $icon . '.svg';
+  $args = array(
+    'css_class' => 'icon icon-' . $icon,
+  );
+  return wp_get_svg( $path, $args );
+}</code></pre>
+				</section>
+				<section>
+					<p>Code in our theme</p>
+<pre><code>&lt;h1&gt;&lt;?php the_title(); ?&gt;&lt;/h1&gt;
+
+&lt;p&gt;&lt;?php echo wp_svg_icon( 'icon-1' ); ?&gt;&lt;/p&gt;</code></pre>
+				</section>
+				<section>
+					<p>The rendered markup</p>
+<pre><code>&lt;h1&gt;My Awesome Post Title&lt;/h1&gt;
+
+&lt;p&gt;
+  <svg class="icon icon-icon-1" role="image">
+    <path d="..."></path>
+  </svg>
+&lt;/p&gt;</code></pre>
+				</section>
+				<section>
+					<p>Folder structure of icons</p>
+					<img src="img/icon-folder-path.jpg">
+				</section>
+				<section>
+					<p>We can make as many helper functions as we want for different directories of SVGs.</p>
+					<small>(See <a href="https://gist.github.com/kingkool68/6d72977fe8c82eeb9a85295ac3623cde" target="_blank">complete code snippet</a>)</small>
+				</section>
+				<section data-background-image="img/idea.gif" data-background-size="contain"></section>
+				<section>
+					<h1>Wrapping Up</h1>
+				</section>
+				<section>
+					<h2>Where can I get SVG icons?</h2>
+				</section>
+				<section>
+					<p><a href="https://icomoon.io/" target="_blank">IcoMoon.io</a></p>
+					<a href="https://icomoon.io/" target="_blank"><img src="img/icomoon-screenshot.jpg"></a>
+				</section>
+				<section>
+					<p><a href="https://iconpharm.com/" target="_blank">IconPharm.com</a></p>
+					<a href="https://iconpharm.com/" target="_blank"><img src="img/iconpharm-screenshot.jpg"></a>
+				</section>
+				<section>
+					<p><a href="https://thenounproject.com/" target="_blank">TheNounProject.com</a></p>
+					<a href="https://thenounproject.com/" target="_blank"><img src="img/the-noun-project-screenshot.jpg"></a>
+				</section>
+				<section>
+					<p><a href="https://iconmonstr.com/" target="_blank">iconmonstr.com</a></p>
+					<a href="https://iconmonstr.com/" target="_blank"><img src="img/iconmonstr-screenshot.jpg"></a>
+				</section>
+				<section>
+					<p><a href="https://endlessicons.com/" target="_blank">EndlessIcons.com</a></p>
+					<a href="https://endlessicons.com/" target="_blank"><img src="img/endlessicons-screenshot.jpg"></a>
+				</section>
+				<section>
+					<h2>Optimizing SVGs</h2>
+					<p class="fragment">SVGO <a href="https://github.com/svg/svgo" target="_blank">https://github.com/svg/svgo</a></p>
+					<p class="fragment">SVGO UI <a href="https://github.com/svg/svgo" target="_blank">https://github.com/svg/svgo-gui</a></p>
+				</section>
+				<section>
+					<h2>More Resources</h2>
+					<p class="fragment"><a href="https://css-tricks.com/using-svg/" target="_blank">Using SVG</a> - CSS-Tricks.com</p>
+					<p class="fragment"><a href="https://css-tricks.com/mega-list-svg-information/" target="_blank">Mega List of SVG Information</a> - CSS-Tricks.com</p>
+					<p class="fragment"><a href="https://github.com/jonitrythall/svgpocketguide" target="_blank">SVG Pocket Guide</a> - Joni Trythall</p>
+					<p class="fragment"><a href="https://codepen.io/AmeliaBR/collections/popular/" target="_blank">Amelia Bellamy-Royds CodePen Collections</a> - Amelia Bellamy-Royds</p>
+				</section>
+				<section>
+					<h1>In Conclusion</h1>
+				</section>
+				<section>
+					<h2>Why aren't you using SVGs?</h2>
+					<p class="fragment">Now you can't say you didn't know how</p>
+				</section>
+				<section>
+					<h1>Thank You!</h1>
+					<p class="tweet-me"><a href="https://twitter.com/kingkool68"><img src="img/twitter-logo.svg" class="no-border" alt="Tweet me!"> @kingkool68</a></p>
+					<h2 class="fragment">Questions?</h2>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="reveal.js/lib/js/head.min.js"></script>
+		<script src="reveal.js/js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme || 'sky', // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
