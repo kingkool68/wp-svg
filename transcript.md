@@ -1,8 +1,8 @@
 Good Morning! Today we're going to talk all about SVGs and how we can work with them in WordPress.
 
-Specifically this talk will cover 
-
 You can follow along with the slides if you want by visiting v.gd/wpsvg
+
+Specifically this talk will cover 1) What SVGs are and how they work 2) Why SVGs are important 3) Icon fonts and why they are bad 4) How we can use SVGs 5) Questions
 
 First things first, here's a little bit about me. My name is Russell Heimlich. During the day I'm the lead developer at Spirited Media, a local news startup. At night I'm a professional toddler chaser/YouTube Kids VJ. 
 
