@@ -6,7 +6,7 @@
 
 		<title>WP SVG: Working with Scalable Vector Graphics in WordPress</title>
 
-		<meta name="description" content="Slides from my 2017 WordCamp Baltimore talk about working with scalable vector graphics in WordPress.">
+		<meta name="description" content="Slides from my 2020 WordCamp San Antonio talk about working with scalable vector graphics in WordPress.">
 		<meta name="author" content="Russell Heimlich">
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -61,21 +61,21 @@
 				<section>
 					<h1>About Me</h1>
 				</section>
-				<section>
-					<p>Russell Heimlich</p>
-					<img src="img/russell-and-zadie-in-car.jpg" style="max-width: 580px;">
-				</section>
-				<section>
-					<p>Lead Developer at Spirited Media</p>
-					<a href="https://billypenn.com" target="_blank">
-						<img src="img/billy-penn-logo.svg">
-					</a>
-					<a href="https://theincline.com" target="_blank">
-						<img src="img/the-incline-logo.svg">
-					</a>
-					<a href="https://www.denverite.com" target="_blank">
-						<img src="img/denverite-logo.png">
-					</a>
+				<section
+                    data-background-color="#ffffff"
+                    data-background-image="img/russell-on-pogo-stick.jpg"
+                    data-background-size="contain"
+                    data-transition="fade"
+                >
+                    <p style="padding-top: 85vh;">
+                        <span style="background-color: rgba(255, 255, 255, 0.55); display: block; padding-bottom: 80px;">Russell Heimlich<br>(like the maneuver)</span>
+                    </p>
+                </section>
+                <section>
+                    <p>Senior Developer at nclud</p>
+                    <a href="https://nclud.com">
+                        <img src="img/nclud-logo.svg" style="max-width: 540px;" class="no-border">
+                    </a>
 				</section>
 				<section>
 					<p>Professional Toddler Chaser</p>
@@ -222,7 +222,6 @@
 					<p>As an <code>&lt;img&gt;</code></p>
 					<pre><code><img src="/path/to/my.svg" alt="A gnarly tiger"></code></pre>
 				</section>
-				<section data-background-image="img/ok.gif"></section>
 				<section>
 					<p>As a background image</p>
 <pre><code>.image {
@@ -235,7 +234,6 @@
   <span class="visually-hidden-text">A mighty tiger!</span>
 </div></code></pre>
 				</section>
-				<section data-background-image="img/yeah.gif"></section>
 				<section>
 					<p>Defining an SVG Sprite</p>
 <pre><code><svg>
@@ -264,14 +262,12 @@
     <use xlink:href="#icon-2"></use>
 </svg></code></pre>
 				</section>
-				<section data-background-image="img/oh-really.gif"></section>
 				<section>
 					<p>Inlining an SVG Where We Want It</p>
 <pre><code><svg>
   <path d="..."></path>
 </svg></code></pre>
 				</section>
-				<section data-background-image="img/i-guess.gif"></section>
 				<section>
 					<h2>Downsides</h2>
 					<p class="fragment">Using <code>&lt;img&gt;</code> or CSS <code>background-image</code> offers no control of what is inside <code>&lt;svg&gt;</code> element</p>
@@ -462,7 +458,7 @@ add_filter( 'upload_mimes', 'enable_svg_mime_types', 10, 1 );</code></pre>
 				center: true,
 
 				theme: Reveal.getQueryHash().theme || 'sky', // available themes are in /css/theme
-				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+				transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
 
 				// Optional libraries used to extend on reveal.js
 				dependencies: [
